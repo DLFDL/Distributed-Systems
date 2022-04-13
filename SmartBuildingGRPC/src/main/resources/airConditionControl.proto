@@ -6,36 +6,40 @@ option java_outer_classname = "airConditionControlImpl";
 
 package airConditionControl;
 
+// the air condition control service definition
 service airConditionControl {
 
+	// unary remote procedure calls
 	rpc login(LoginRequest) returns (LoginResponse){}
+	// bidirectional streaming remote procedure calls
 	rpc update (stream UpdateRequest) returns (stream UpdateResponse) {}
+	// unary remote procedure calls
 	rpc logout (LogoutRequest) returns (LogoutResponse) {}
 }
-
+// request message travel from client to server
 message LoginRequest{
 	string username = 1;
 	string password = 2;
 }
-
+// response message travel from server to client
 message LoginResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
 }
-
+// request message travel from client to server
 message UpdateRequest{
 	string requestMessage = 1;
 }
-
+// response message travel from server to client
 message UpdateResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
 }
-
+// request message travel from client to server
 message LogoutRequest{
 	string username = 1;
 }
-
+// response message travel from server to client
 message LogoutResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;

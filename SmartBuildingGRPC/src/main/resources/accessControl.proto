@@ -6,36 +6,40 @@ option java_outer_classname = "accessControlImpl";
 
 package accessControl;
 
+// the access control service definition
 service accessControl {
 
+	// unary remote procedure calls
 	rpc login(LoginRequest) returns (LoginResponse){}
+	// server streaming remote procedure calls
 	rpc authorization (AuthorizationRequest) returns (stream AuthorizationResponse) {}
+	// unary remote procedure calls
 	rpc logout (LogoutRequest) returns (LogoutResponse) {}
 }
-
+// request message travel from client to server
 message LoginRequest{
 	string username = 1;
 	string password = 2;
 }
-
+// response message travel from server to client
 message LoginResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
 }
-
+// request message travel from client to server
 message AuthorizationRequest{
 	string name = 1;
 }
-
+// response message travel from server to client
 message AuthorizationResponse{
 	string message = 1;
 	int32 responseCode = 2;
 }
-
+// request message travel from client to server
 message LogoutRequest{
 	string username = 1;
 }
-
+// response message travel from server to client
 message LogoutResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
