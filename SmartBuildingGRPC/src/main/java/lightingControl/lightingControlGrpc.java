@@ -159,6 +159,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public void login(lightingControl.LoginRequest request,
@@ -169,6 +170,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * client streaming remote procedure calls
+     * user will send stream of messages to the server and server will respond with one response to the user
      * </pre>
      */
     public io.grpc.stub.StreamObserver<lightingControl.IntensityRequest> setIntensity(
@@ -179,6 +181,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public void logout(lightingControl.LogoutRequest request,
@@ -237,6 +240,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public void login(lightingControl.LoginRequest request,
@@ -248,6 +252,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * client streaming remote procedure calls
+     * user will send stream of messages to the server and server will respond with one response to the user
      * </pre>
      */
     public io.grpc.stub.StreamObserver<lightingControl.IntensityRequest> setIntensity(
@@ -259,6 +264,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public void logout(lightingControl.LogoutRequest request,
@@ -292,6 +298,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public lightingControl.LoginResponse login(lightingControl.LoginRequest request) {
@@ -302,6 +309,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public lightingControl.LogoutResponse logout(lightingControl.LogoutRequest request) {
@@ -334,6 +342,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<lightingControl.LoginResponse> login(
@@ -345,6 +354,7 @@ public final class lightingControlGrpc {
     /**
      * <pre>
      * unary remote procedure calls
+     * user will send one request and server will respond with one response
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<lightingControl.LogoutResponse> logout(

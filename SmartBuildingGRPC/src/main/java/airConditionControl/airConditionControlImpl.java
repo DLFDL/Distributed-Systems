@@ -67,22 +67,22 @@ public final class airConditionControlImpl {
       "nControl\"2\n\014LoginRequest\022\020\n\010username\030\001 \001" +
       "(\t\022\020\n\010password\030\002 \001(\t\">\n\rLoginResponse\022\027\n" +
       "\017responseMessage\030\001 \001(\t\022\024\n\014responseCode\030\002" +
-      " \001(\005\"\'\n\rUpdateRequest\022\026\n\016requestMessage\030" +
-      "\001 \001(\t\"?\n\016UpdateResponse\022\027\n\017responseMessa" +
-      "ge\030\001 \001(\t\022\024\n\014responseCode\030\002 \001(\005\"!\n\rLogout" +
-      "Request\022\020\n\010username\030\001 \001(\t\"?\n\016LogoutRespo" +
-      "nse\022\027\n\017responseMessage\030\001 \001(\t\022\024\n\014response" +
-      "Code\030\002 \001(\005\"J\n\rErrorResponse\022\020\n\010username\030" +
-      "\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\025\n\rexpectedValue" +
-      "\030\003 \001(\t\"\007\n\005Empty2\225\002\n\023airConditionControl\022" +
-      "P\n\005login\022!.airConditionControl.LoginRequ" +
-      "est\032\".airConditionControl.LoginResponse\"" +
-      "\000\022W\n\006update\022\".airConditionControl.Update" +
-      "Request\032#.airConditionControl.UpdateResp" +
-      "onse\"\000(\0010\001\022S\n\006logout\022\".airConditionContr" +
-      "ol.LogoutRequest\032#.airConditionControl.L" +
-      "ogoutResponse\"\000B0\n\023airConditionControlB\027" +
-      "airConditionControlImplP\001b\006proto3"
+      " \001(\005\"$\n\rUpdateRequest\022\023\n\013requestCode\030\001 \001" +
+      "(\005\"?\n\016UpdateResponse\022\027\n\017responseMessage\030" +
+      "\001 \001(\t\022\024\n\014responseCode\030\002 \001(\005\"!\n\rLogoutReq" +
+      "uest\022\020\n\010username\030\001 \001(\t\"?\n\016LogoutResponse" +
+      "\022\027\n\017responseMessage\030\001 \001(\t\022\024\n\014responseCod" +
+      "e\030\002 \001(\005\"J\n\rErrorResponse\022\020\n\010username\030\001 \001" +
+      "(\t\022\020\n\010password\030\002 \001(\t\022\025\n\rexpectedValue\030\003 " +
+      "\001(\t\"\007\n\005Empty2\225\002\n\023airConditionControl\022P\n\005" +
+      "login\022!.airConditionControl.LoginRequest" +
+      "\032\".airConditionControl.LoginResponse\"\000\022W" +
+      "\n\006update\022\".airConditionControl.UpdateReq" +
+      "uest\032#.airConditionControl.UpdateRespons" +
+      "e\"\000(\0010\001\022S\n\006logout\022\".airConditionControl." +
+      "LogoutRequest\032#.airConditionControl.Logo" +
+      "utResponse\"\000B0\n\023airConditionControlB\027air" +
+      "ConditionControlImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -113,7 +113,7 @@ public final class airConditionControlImpl {
     internal_static_airConditionControl_UpdateRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_airConditionControl_UpdateRequest_descriptor,
-        new java.lang.String[] { "RequestMessage", });
+        new java.lang.String[] { "RequestCode", });
     internal_static_airConditionControl_UpdateResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_airConditionControl_UpdateResponse_fieldAccessorTable = new

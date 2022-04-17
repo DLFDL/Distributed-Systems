@@ -4,6 +4,10 @@
 package accessControl;
 
 /**
+ * <pre>
+ * response message travel from server to client
+ * </pre>
+ *
  * Protobuf type {@code accessControl.LogoutResponse}
  */
 public  final class LogoutResponse extends
@@ -297,6 +301,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * response message travel from server to client
+   * </pre>
+   *
    * Protobuf type {@code accessControl.LogoutResponse}
    */
   public static final class Builder extends

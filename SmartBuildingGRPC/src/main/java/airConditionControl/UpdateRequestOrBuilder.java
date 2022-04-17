@@ -8,12 +8,7 @@ public interface UpdateRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string requestMessage = 1;</code>
+   * <code>int32 requestCode = 1;</code>
    */
-  java.lang.String getRequestMessage();
-  /**
-   * <code>string requestMessage = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getRequestMessageBytes();
+  int getRequestCode();
 }

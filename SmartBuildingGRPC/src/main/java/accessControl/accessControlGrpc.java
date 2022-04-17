@@ -16,6 +16,9 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
+ * <pre>
+ * the access control service definition
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.15.0)",
@@ -147,10 +150,17 @@ public final class accessControlGrpc {
   }
 
   /**
+   * <pre>
+   * the access control service definition
+   * </pre>
    */
   public static abstract class accessControlImplBase implements io.grpc.BindableService {
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public void login(accessControl.LoginRequest request,
         io.grpc.stub.StreamObserver<accessControl.LoginResponse> responseObserver) {
@@ -158,6 +168,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * server streaming remote procedure calls
+     * user will send one request to the server and server will respond with stream of messages to the user
+     * </pre>
      */
     public void authorization(accessControl.AuthorizationRequest request,
         io.grpc.stub.StreamObserver<accessControl.AuthorizationResponse> responseObserver) {
@@ -165,6 +179,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public void logout(accessControl.LogoutRequest request,
         io.grpc.stub.StreamObserver<accessControl.LogoutResponse> responseObserver) {
@@ -199,6 +217,9 @@ public final class accessControlGrpc {
   }
 
   /**
+   * <pre>
+   * the access control service definition
+   * </pre>
    */
   public static final class accessControlStub extends io.grpc.stub.AbstractStub<accessControlStub> {
     private accessControlStub(io.grpc.Channel channel) {
@@ -217,6 +238,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public void login(accessControl.LoginRequest request,
         io.grpc.stub.StreamObserver<accessControl.LoginResponse> responseObserver) {
@@ -225,6 +250,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * server streaming remote procedure calls
+     * user will send one request to the server and server will respond with stream of messages to the user
+     * </pre>
      */
     public void authorization(accessControl.AuthorizationRequest request,
         io.grpc.stub.StreamObserver<accessControl.AuthorizationResponse> responseObserver) {
@@ -233,6 +262,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public void logout(accessControl.LogoutRequest request,
         io.grpc.stub.StreamObserver<accessControl.LogoutResponse> responseObserver) {
@@ -242,6 +275,9 @@ public final class accessControlGrpc {
   }
 
   /**
+   * <pre>
+   * the access control service definition
+   * </pre>
    */
   public static final class accessControlBlockingStub extends io.grpc.stub.AbstractStub<accessControlBlockingStub> {
     private accessControlBlockingStub(io.grpc.Channel channel) {
@@ -260,6 +296,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public accessControl.LoginResponse login(accessControl.LoginRequest request) {
       return blockingUnaryCall(
@@ -267,6 +307,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * server streaming remote procedure calls
+     * user will send one request to the server and server will respond with stream of messages to the user
+     * </pre>
      */
     public java.util.Iterator<accessControl.AuthorizationResponse> authorization(
         accessControl.AuthorizationRequest request) {
@@ -275,6 +319,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public accessControl.LogoutResponse logout(accessControl.LogoutRequest request) {
       return blockingUnaryCall(
@@ -283,6 +331,9 @@ public final class accessControlGrpc {
   }
 
   /**
+   * <pre>
+   * the access control service definition
+   * </pre>
    */
   public static final class accessControlFutureStub extends io.grpc.stub.AbstractStub<accessControlFutureStub> {
     private accessControlFutureStub(io.grpc.Channel channel) {
@@ -301,6 +352,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<accessControl.LoginResponse> login(
         accessControl.LoginRequest request) {
@@ -309,6 +364,10 @@ public final class accessControlGrpc {
     }
 
     /**
+     * <pre>
+     * unary remote procedure calls
+     * user will send one request and server will respond with one response
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<accessControl.LogoutResponse> logout(
         accessControl.LogoutRequest request) {

@@ -45,6 +45,11 @@ public final class accessControlImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_accessControl_LogoutResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_accessControl_ErrorResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_accessControl_ErrorResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_accessControl_Empty_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -66,15 +71,17 @@ public final class accessControlImpl {
       "izationResponse\022\017\n\007message\030\001 \001(\t\022\024\n\014resp" +
       "onseCode\030\002 \001(\005\"!\n\rLogoutRequest\022\020\n\010usern" +
       "ame\030\001 \001(\t\"?\n\016LogoutResponse\022\027\n\017responseM" +
-      "essage\030\001 \001(\t\022\024\n\014responseCode\030\002 \001(\005\"\007\n\005Em" +
-      "pty2\376\001\n\raccessControl\022D\n\005login\022\033.accessC" +
-      "ontrol.LoginRequest\032\034.accessControl.Logi" +
-      "nResponse\"\000\022^\n\rauthorization\022#.accessCon" +
-      "trol.AuthorizationRequest\032$.accessContro" +
-      "l.AuthorizationResponse\"\0000\001\022G\n\006logout\022\034." +
-      "accessControl.LogoutRequest\032\035.accessCont" +
-      "rol.LogoutResponse\"\000B$\n\raccessControlB\021a" +
-      "ccessControlImplP\001b\006proto3"
+      "essage\030\001 \001(\t\022\024\n\014responseCode\030\002 \001(\005\"J\n\rEr" +
+      "rorResponse\022\020\n\010username\030\001 \001(\t\022\020\n\010passwor" +
+      "d\030\002 \001(\t\022\025\n\rexpectedValue\030\003 \001(\t\"\007\n\005Empty2" +
+      "\376\001\n\raccessControl\022D\n\005login\022\033.accessContr" +
+      "ol.LoginRequest\032\034.accessControl.LoginRes" +
+      "ponse\"\000\022^\n\rauthorization\022#.accessControl" +
+      ".AuthorizationRequest\032$.accessControl.Au" +
+      "thorizationResponse\"\0000\001\022G\n\006logout\022\034.acce" +
+      "ssControl.LogoutRequest\032\035.accessControl." +
+      "LogoutResponse\"\000B$\n\raccessControlB\021acces" +
+      "sControlImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -124,8 +131,14 @@ public final class accessControlImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_accessControl_LogoutResponse_descriptor,
         new java.lang.String[] { "ResponseMessage", "ResponseCode", });
-    internal_static_accessControl_Empty_descriptor =
+    internal_static_accessControl_ErrorResponse_descriptor =
       getDescriptor().getMessageTypes().get(6);
+    internal_static_accessControl_ErrorResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_accessControl_ErrorResponse_descriptor,
+        new java.lang.String[] { "Username", "Password", "ExpectedValue", });
+    internal_static_accessControl_Empty_descriptor =
+      getDescriptor().getMessageTypes().get(7);
     internal_static_accessControl_Empty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_accessControl_Empty_descriptor,

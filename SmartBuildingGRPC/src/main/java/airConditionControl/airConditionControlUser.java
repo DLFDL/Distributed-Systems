@@ -9,27 +9,30 @@ public class airConditionControlUser {
 	private static airConditionControlGrpc.airConditionControlBlockingStub blockingStub;
 	private static airConditionControlGrpc.airConditionControlStub asyncStub;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
-		// build a channel - a channel connects the client to the server
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
+		// JmDNS service discovery on the client side doesn't seem to work at all on macOS
+		/**
+		ServiceInfo serviceInfo;
+		String service_type = "_airConditionControl._tcp.local";
+		// now retrieve the service info - all we are supplying is the service type
+		serviceInfo = ServiceDiscovery.runjmDNS(service_type);
+		// use the serviceInfo to retrieve the port
+		int port = serviceInfo.getPort();
+		String host = serviceInfo.getHostAddresses()[0];
+		*/
+		
+		// build a channel - a channel connects the user to the server
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build(); //(host, port)
 
 		// create a stubs, pass the channel to the stubs
 		// stub is local representation of remote object (service)
 		blockingStub = airConditionControlGrpc.newBlockingStub(channel);
 		asyncStub = airConditionControlGrpc.newStub(channel);
 
-		// create Request messages for use within the main method
-		LoginRequest loginRequest = LoginRequest.newBuilder().setUsername("Daniel").setPassword("Java").build();
-		LogoutRequest logoutRequest = LogoutRequest.newBuilder().setUsername("Daniel").build();
-
-		// call the login RPC from within main
-		LoginResponse responseIn = blockingStub.login(loginRequest);
-		System.out.println("Response from Server: " + responseIn);
-		
-		// call the logout RPC from within main
-		LogoutResponse responseOut = blockingStub.logout(logoutRequest);
-		System.out.println("Response from server: " + responseOut);
+		login();
+		update();
+		logout();
 	}
 
 	
@@ -51,7 +54,7 @@ public class airConditionControlUser {
 
 			@Override
 			public void onNext(UpdateResponse response) {
-				System.out.println("Final response from server: " + response.getResponseCode() + response.getResponseMessage());
+				System.out.println("The updated code send by the server is: " + response.getResponseCode());
 			}
 
 			@Override
@@ -60,42 +63,40 @@ public class airConditionControlUser {
 			}
 
 			@Override
-			public void onCompleted() {
-				System.out.println("stream is completed ...");
-				UpdateResponse.Builder response = UpdateResponse.newBuilder();
-				response.setResponseMessage("stream is now completed ");				
+			public void onCompleted() {	
+				System.out.println("Streaming is now completed, thank you.");
 			}
 		};
 		
 			// gRPC library returns a StreamObserver to requestObserver, use for sending outgoing messages
 			StreamObserver<UpdateRequest> requestObserver = asyncStub.update(responseObserver);
 			try {
-				requestObserver.onNext(UpdateRequest.newBuilder().setRequestMessage("1").build());
-				Thread.sleep(500);
-				requestObserver.onNext(UpdateRequest.newBuilder().setRequestMessage("2").build());
-				Thread.sleep(500);
-				requestObserver.onNext(UpdateRequest.newBuilder().setRequestMessage("3").build());
-				Thread.sleep(500);
-				requestObserver.onNext(UpdateRequest.newBuilder().setRequestMessage("4").build());
-				Thread.sleep(500);
+				requestObserver.onNext(UpdateRequest.newBuilder().setRequestCode(11).build());
+				Thread.sleep(2000);
+				requestObserver.onNext(UpdateRequest.newBuilder().setRequestCode(22).build());
+				Thread.sleep(2000);
+				requestObserver.onNext(UpdateRequest.newBuilder().setRequestCode(33).build());
+				Thread.sleep(2000);
+				requestObserver.onNext(UpdateRequest.newBuilder().setRequestCode(44).build());
+				Thread.sleep(2000);
 				
-				System.out.println("User has now sent all masseges");
-			
 				// mark the end of requests
-				requestObserver.onCompleted();
+	 			requestObserver.onCompleted();
+	 			
+				System.out.println("\nThe server now has sent all messages.");
+				Thread.sleep(2000);
 
-			
-				Thread.sleep(5000);
+	 			Thread.sleep(5000);
 			} catch (RuntimeException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {			
-				e.printStackTrace();
-			}
-
-			try {
-				Thread.sleep(10000);
+				requestObserver.onError(e);
+		        throw e;
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 	
+			
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -107,6 +108,6 @@ public class airConditionControlUser {
 		LogoutRequest logoutRequest = LogoutRequest.newBuilder().setUsername("Daniel").build();
 		// call the service and get a response back
 		LogoutResponse response = blockingStub.logout(logoutRequest);
-		System.out.println("Response from Server: " + response);
+		System.out.println("\nResponse from server: " + response);
 	}	
 }

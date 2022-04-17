@@ -5,23 +5,24 @@ package accessControl;
 
 /**
  * <pre>
- * request message travel from client to server
+ * error response message travel from server to client
  * </pre>
  *
- * Protobuf type {@code accessControl.LoginRequest}
+ * Protobuf type {@code accessControl.ErrorResponse}
  */
-public  final class LoginRequest extends
+public  final class ErrorResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:accessControl.LoginRequest)
-    LoginRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:accessControl.ErrorResponse)
+    ErrorResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use LoginRequest.newBuilder() to construct.
-  private LoginRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use ErrorResponse.newBuilder() to construct.
+  private ErrorResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private LoginRequest() {
+  private ErrorResponse() {
     username_ = "";
     password_ = "";
+    expectedValue_ = "";
   }
 
   @java.lang.Override
@@ -29,7 +30,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private LoginRequest(
+  private ErrorResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -60,6 +61,12 @@ private static final long serialVersionUID = 0L;
             password_ = s;
             break;
           }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            expectedValue_ = s;
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -81,15 +88,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return accessControl.accessControlImpl.internal_static_accessControl_LoginRequest_descriptor;
+    return accessControl.accessControlImpl.internal_static_accessControl_ErrorResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return accessControl.accessControlImpl.internal_static_accessControl_LoginRequest_fieldAccessorTable
+    return accessControl.accessControlImpl.internal_static_accessControl_ErrorResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            accessControl.LoginRequest.class, accessControl.LoginRequest.Builder.class);
+            accessControl.ErrorResponse.class, accessControl.ErrorResponse.Builder.class);
   }
 
   public static final int USERNAME_FIELD_NUMBER = 1;
@@ -160,6 +167,40 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int EXPECTEDVALUE_FIELD_NUMBER = 3;
+  private volatile java.lang.Object expectedValue_;
+  /**
+   * <code>string expectedValue = 3;</code>
+   */
+  public java.lang.String getExpectedValue() {
+    java.lang.Object ref = expectedValue_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      expectedValue_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string expectedValue = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getExpectedValueBytes() {
+    java.lang.Object ref = expectedValue_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      expectedValue_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -180,6 +221,9 @@ private static final long serialVersionUID = 0L;
     if (!getPasswordBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
     }
+    if (!getExpectedValueBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, expectedValue_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -195,6 +239,9 @@ private static final long serialVersionUID = 0L;
     if (!getPasswordBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
     }
+    if (!getExpectedValueBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, expectedValue_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -205,16 +252,18 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof accessControl.LoginRequest)) {
+    if (!(obj instanceof accessControl.ErrorResponse)) {
       return super.equals(obj);
     }
-    accessControl.LoginRequest other = (accessControl.LoginRequest) obj;
+    accessControl.ErrorResponse other = (accessControl.ErrorResponse) obj;
 
     boolean result = true;
     result = result && getUsername()
         .equals(other.getUsername());
     result = result && getPassword()
         .equals(other.getPassword());
+    result = result && getExpectedValue()
+        .equals(other.getExpectedValue());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -230,74 +279,76 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getUsername().hashCode();
     hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
     hash = (53 * hash) + getPassword().hashCode();
+    hash = (37 * hash) + EXPECTEDVALUE_FIELD_NUMBER;
+    hash = (53 * hash) + getExpectedValue().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static accessControl.LoginRequest parseFrom(byte[] data)
+  public static accessControl.ErrorResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static accessControl.LoginRequest parseFrom(java.io.InputStream input)
+  public static accessControl.ErrorResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static accessControl.LoginRequest parseDelimitedFrom(java.io.InputStream input)
+  public static accessControl.ErrorResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static accessControl.LoginRequest parseDelimitedFrom(
+  public static accessControl.ErrorResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static accessControl.LoginRequest parseFrom(
+  public static accessControl.ErrorResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -310,7 +361,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(accessControl.LoginRequest prototype) {
+  public static Builder newBuilder(accessControl.ErrorResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -327,29 +378,29 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * request message travel from client to server
+   * error response message travel from server to client
    * </pre>
    *
-   * Protobuf type {@code accessControl.LoginRequest}
+   * Protobuf type {@code accessControl.ErrorResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:accessControl.LoginRequest)
-      accessControl.LoginRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:accessControl.ErrorResponse)
+      accessControl.ErrorResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return accessControl.accessControlImpl.internal_static_accessControl_LoginRequest_descriptor;
+      return accessControl.accessControlImpl.internal_static_accessControl_ErrorResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return accessControl.accessControlImpl.internal_static_accessControl_LoginRequest_fieldAccessorTable
+      return accessControl.accessControlImpl.internal_static_accessControl_ErrorResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              accessControl.LoginRequest.class, accessControl.LoginRequest.Builder.class);
+              accessControl.ErrorResponse.class, accessControl.ErrorResponse.Builder.class);
     }
 
-    // Construct using accessControl.LoginRequest.newBuilder()
+    // Construct using accessControl.ErrorResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -371,23 +422,25 @@ private static final long serialVersionUID = 0L;
 
       password_ = "";
 
+      expectedValue_ = "";
+
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return accessControl.accessControlImpl.internal_static_accessControl_LoginRequest_descriptor;
+      return accessControl.accessControlImpl.internal_static_accessControl_ErrorResponse_descriptor;
     }
 
     @java.lang.Override
-    public accessControl.LoginRequest getDefaultInstanceForType() {
-      return accessControl.LoginRequest.getDefaultInstance();
+    public accessControl.ErrorResponse getDefaultInstanceForType() {
+      return accessControl.ErrorResponse.getDefaultInstance();
     }
 
     @java.lang.Override
-    public accessControl.LoginRequest build() {
-      accessControl.LoginRequest result = buildPartial();
+    public accessControl.ErrorResponse build() {
+      accessControl.ErrorResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -395,10 +448,11 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public accessControl.LoginRequest buildPartial() {
-      accessControl.LoginRequest result = new accessControl.LoginRequest(this);
+    public accessControl.ErrorResponse buildPartial() {
+      accessControl.ErrorResponse result = new accessControl.ErrorResponse(this);
       result.username_ = username_;
       result.password_ = password_;
+      result.expectedValue_ = expectedValue_;
       onBuilt();
       return result;
     }
@@ -437,22 +491,26 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof accessControl.LoginRequest) {
-        return mergeFrom((accessControl.LoginRequest)other);
+      if (other instanceof accessControl.ErrorResponse) {
+        return mergeFrom((accessControl.ErrorResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(accessControl.LoginRequest other) {
-      if (other == accessControl.LoginRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(accessControl.ErrorResponse other) {
+      if (other == accessControl.ErrorResponse.getDefaultInstance()) return this;
       if (!other.getUsername().isEmpty()) {
         username_ = other.username_;
         onChanged();
       }
       if (!other.getPassword().isEmpty()) {
         password_ = other.password_;
+        onChanged();
+      }
+      if (!other.getExpectedValue().isEmpty()) {
+        expectedValue_ = other.expectedValue_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -470,11 +528,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      accessControl.LoginRequest parsedMessage = null;
+      accessControl.ErrorResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (accessControl.LoginRequest) e.getUnfinishedMessage();
+        parsedMessage = (accessControl.ErrorResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -621,6 +679,75 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
+
+    private java.lang.Object expectedValue_ = "";
+    /**
+     * <code>string expectedValue = 3;</code>
+     */
+    public java.lang.String getExpectedValue() {
+      java.lang.Object ref = expectedValue_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        expectedValue_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string expectedValue = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getExpectedValueBytes() {
+      java.lang.Object ref = expectedValue_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        expectedValue_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string expectedValue = 3;</code>
+     */
+    public Builder setExpectedValue(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      expectedValue_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string expectedValue = 3;</code>
+     */
+    public Builder clearExpectedValue() {
+      
+      expectedValue_ = getDefaultInstance().getExpectedValue();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string expectedValue = 3;</code>
+     */
+    public Builder setExpectedValueBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      expectedValue_ = value;
+      onChanged();
+      return this;
+    }
     @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -634,41 +761,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:accessControl.LoginRequest)
+    // @@protoc_insertion_point(builder_scope:accessControl.ErrorResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:accessControl.LoginRequest)
-  private static final accessControl.LoginRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:accessControl.ErrorResponse)
+  private static final accessControl.ErrorResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new accessControl.LoginRequest();
+    DEFAULT_INSTANCE = new accessControl.ErrorResponse();
   }
 
-  public static accessControl.LoginRequest getDefaultInstance() {
+  public static accessControl.ErrorResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<LoginRequest>
-      PARSER = new com.google.protobuf.AbstractParser<LoginRequest>() {
+  private static final com.google.protobuf.Parser<ErrorResponse>
+      PARSER = new com.google.protobuf.AbstractParser<ErrorResponse>() {
     @java.lang.Override
-    public LoginRequest parsePartialFrom(
+    public ErrorResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new LoginRequest(input, extensionRegistry);
+      return new ErrorResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<LoginRequest> parser() {
+  public static com.google.protobuf.Parser<ErrorResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<LoginRequest> getParserForType() {
+  public com.google.protobuf.Parser<ErrorResponse> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public accessControl.LoginRequest getDefaultInstanceForType() {
+  public accessControl.ErrorResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

@@ -1,5 +1,7 @@
 package accessControl;
 
+import javax.jmdns.ServiceInfo;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -11,25 +13,28 @@ public class accessControlUser {
 
 	public static void main(String[] args) {
 		
-		// build a channel - a channel connects the client to the server
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051).usePlaintext().build();
+		// JmDNS service discovery on the client side doesn't seem to work at all on macOS
+		/**
+		ServiceInfo serviceInfo;
+		String service_type = "_accessControl._tcp.local";
+		// now retrieve the service info - all we are supplying is the service type
+		serviceInfo = ServiceDiscovery.runjmDNS(service_type);
+		// use the serviceInfo to retrieve the port
+		int port = serviceInfo.getPort();
+		String host = serviceInfo.getHostAddresses()[0];
+		*/
+		
+		// build a channel - a channel connects the user to the server
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build(); //(host, port)
 		
 		// create a stubs, pass the channel to the stubs
 		// stub is local representation of remote object (service)
 		blockingStub = accessControlGrpc.newBlockingStub(channel);
 		asyncStub = accessControlGrpc.newStub(channel);
 
-		// create Request messages for use within the main method
-		LoginRequest loginRequest = LoginRequest.newBuilder().setUsername("Daniel").setPassword("Java").build();
-		LogoutRequest logoutRequest = LogoutRequest.newBuilder().setUsername("Daniel").build();
-
-		// call the login RPC from within main
-		LoginResponse responseIn = blockingStub.login(loginRequest);
-		System.out.println("Response from Server: " + responseIn);
-		
-		// call the logout RPC from within main
-		LogoutResponse responseOut = blockingStub.logout(logoutRequest);
-		System.out.println("Response from server: " + responseOut);
+		login();
+		authorization();
+		logout();
 	}
 
 	
@@ -52,8 +57,8 @@ public class accessControlUser {
 		StreamObserver<AuthorizationResponse> responseObserver = new StreamObserver<AuthorizationResponse>() {
 
 			@Override
-			public void onNext(AuthorizationResponse msg) {
-				System.out.println("Receiving code " + msg.getResponseCode());		
+			public void onNext(AuthorizationResponse response) {
+				System.out.println("The authorization security level received from the server is: " + response.getResponseCode());		
 			}
 
 			@Override
@@ -63,11 +68,11 @@ public class accessControlUser {
 
 			@Override
 			public void onCompleted() {
-				System.out.println("Stream is completed ...");
-			}
-		};
+				System.out.println("\nStreaming is now completed, thank you.");
+			}};
 
 			asyncStub.authorization(authorizationRequest, responseObserver);
+			
 		
 		try {
 			Thread.sleep(5000);
@@ -83,6 +88,6 @@ public class accessControlUser {
 		LogoutRequest logoutRequest = LogoutRequest.newBuilder().setUsername("Daniel").build();
 		// call the service and get a response back
 		LogoutResponse response = blockingStub.logout(logoutRequest);
-		System.out.println("Response from Server: " + response);
+		System.out.println("\nResponse from Server: " + response);
 	}		
 }
