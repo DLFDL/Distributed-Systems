@@ -1,7 +1,10 @@
 package airConditionControl;
 
+import java.util.concurrent.TimeUnit;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 public class airConditionControlUser {
@@ -11,7 +14,11 @@ public class airConditionControlUser {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-		// JmDNS service discovery on the client side doesn't seem to work at all on macOS
+		// jmDNS service discovery on the client side doesn't seem to work at all on macOS
+		// the built-in zero-configuration networking service Bonjour in macOS is always running and is getting the packets
+		// jmDNS assumes that it is the only daemon running on the machine listening on that port
+		// because the code it's using deliberately binds to 0.0.0.0, no exception is thrown about the port being in use
+		
 		/**
 		ServiceInfo serviceInfo;
 		String service_type = "_airConditionControl._tcp.local";
@@ -33,6 +40,12 @@ public class airConditionControlUser {
 		login();
 		update();
 		logout();
+		
+		try {
+			channel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -41,8 +54,15 @@ public class airConditionControlUser {
 		// create request messages
 		LoginRequest loginRequest = LoginRequest.newBuilder().setUsername("Daniel").setPassword("Java").build();
 		// call the service and get a response back
-		LoginResponse response = blockingStub.login(loginRequest);
-		System.out.println("Response from Server: " + response);
+		// use catch the exception in a try-catch block and also access the Status object from the exception
+		try {
+			LoginResponse response = blockingStub.login(loginRequest);
+		    System.out.println("Success Response from server: " + response.getResponseMessage()
+		    + " with authentication code " + response.getResponseCode() + "\n");
+		} catch (Exception e) {
+		    Status status = Status.fromThrowable(e);
+		    System.out.println(status.getCode() + " : " + status.getDescription());
+		}
 	}
 	
 	
@@ -64,7 +84,7 @@ public class airConditionControlUser {
 
 			@Override
 			public void onCompleted() {	
-				System.out.println("Streaming is now completed, thank you.");
+				System.out.println("\nStreaming is now completed, thank you.");
 			}
 		};
 		
@@ -82,11 +102,12 @@ public class airConditionControlUser {
 				
 				// mark the end of requests
 	 			requestObserver.onCompleted();
+	 			Thread.sleep(2000);
 	 			
 				System.out.println("\nThe server now has sent all messages.");
-				Thread.sleep(2000);
+				
 
-	 			Thread.sleep(5000);
+	 			Thread.sleep(2000);
 			} catch (RuntimeException e) {
 				requestObserver.onError(e);
 		        throw e;
@@ -107,7 +128,14 @@ public class airConditionControlUser {
 		// create request messages
 		LogoutRequest logoutRequest = LogoutRequest.newBuilder().setUsername("Daniel").build();
 		// call the service and get a response back
-		LogoutResponse response = blockingStub.logout(logoutRequest);
-		System.out.println("\nResponse from server: " + response);
+		// use catch the exception in a try-catch block and also access the Status object from the exception
+		try {
+			LogoutResponse response = blockingStub.logout(logoutRequest);
+		    System.out.println("\nSuccess Response from server: " + response.getResponseMessage()
+		    + " with authentication code " + response.getResponseCode());
+		} catch (Exception e) {
+		    Status status = Status.fromThrowable(e);
+		    System.out.println(status.getCode() + " : " + status.getDescription());
+		}
 	}	
 }

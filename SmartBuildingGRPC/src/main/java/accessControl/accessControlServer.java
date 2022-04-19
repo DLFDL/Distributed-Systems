@@ -1,9 +1,13 @@
 package accessControl;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import accessControl.accessControlGrpc.accessControlImplBase;
+import io.grpc.Context;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 public class accessControlServer extends accessControlImplBase{
@@ -13,7 +17,7 @@ public class accessControlServer extends accessControlImplBase{
 		System.out.println("Starting gRPC Server");
 		accessControlServer accesscontrolserver = new accessControlServer();
 
-		//service information	
+		// service information	
 		int port = 50052;
 		String service_type = "_accessControl._tcp.local";
 		String service_name = "gRPC accessControlServer";
@@ -23,17 +27,27 @@ public class accessControlServer extends accessControlImplBase{
 		try {
 			Server server = ServerBuilder.forPort(port)
 					.addService(accesscontrolserver)
+					.intercept(new ExceptionHandler())
 					.build()
 					.start();
 
 			System.out.println("\ngRPC accessControl server started successfully");
-		    server.awaitTermination();
+			
+			// register some actions which are to be performed on termination when the program meets some unexpected situation
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				public void run() {
+		            System.err.println("Shutting down gRPC accessControl server");
+		            try {
+		               server.shutdown().awaitTermination(30,TimeUnit.SECONDS);
+		            } catch (InterruptedException e) {
+		               e.printStackTrace(System.err);
+		            }
+		         }
+			});
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	
@@ -43,6 +57,10 @@ public class accessControlServer extends accessControlImplBase{
 		// find out what was sent by the user
 		String username = request.getUsername();
 		String password = request.getPassword();
+		// we do not want to accept requests with a missing user name, so we throw exception
+		if (username.isBlank()) {
+            throw new IllegalArgumentException("Missing username");
+        }
 
 		// now build response
 		LoginResponse.Builder response = LoginResponse.newBuilder();
@@ -53,7 +71,11 @@ public class accessControlServer extends accessControlImplBase{
 			response.setResponseCode(1).setResponseMessage(username + " successfully logged in");
 		} else {
 			// return unsuccessful response
-			response.setResponseCode(99).setResponseMessage(username + " sorry login failed");
+			// the server can validate the input and if it is not correct it can use the 
+			// StreamObserver onError method to indicate the client that the precondition is failed
+			Status status = Status.FAILED_PRECONDITION.withDescription("Sorry login failed, not valid username or password.");
+	        responseObserver.onError(status.asRuntimeException());
+	        return;
 		}
 
 		responseObserver.onNext(response.build());
@@ -70,16 +92,28 @@ public class accessControlServer extends accessControlImplBase{
 	public void authorization(AuthorizationRequest request, StreamObserver<AuthorizationResponse> responseObserver) {
 		// find out what was sent by the user
 		String name = request.getName();
-		
+		// we do not want to accept requests with a missing user name, so we throw exception
+		if (name.isBlank()) {
+            throw new IllegalArgumentException("Missing name");
+        }
+
 		// now build response
 		AuthorizationResponse.Builder response = AuthorizationResponse.newBuilder();
-
+		
+		// asynchronous work will not be cancelled when authorisation returns
+		Context ctx = Context.current().fork();
+		  ctx.run(() -> {
+		
 		// return success response
 		if (name.equals("Daniel")) {
 			response.setResponseCode(1).setMessage(name + " authorization successfully completed on level 1 security");
 		} else {
 			// return unsuccessful response
-			response.setResponseCode(99).setMessage(name + " sorry authorization failed");
+			// the server can validate the input and if it is not correct it can use the 
+			// StreamObserver onError method to indicate the client that the precondition is failed
+			Status status = Status.FAILED_PRECONDITION.withDescription("Sorry authorization failed, not valid username.");
+	        responseObserver.onError(status.asRuntimeException());
+	        return;
 		}
 			responseObserver.onNext(response.build());
 			// return success response
@@ -87,7 +121,11 @@ public class accessControlServer extends accessControlImplBase{
 			response.setResponseCode(2).setMessage(name + " authorization successfully completed on level 2 security");
 		} else {
 			// return unsuccessful response
-			response.setResponseCode(99).setMessage(name + " sorry authorization failed");
+			// the server can validate the input and if it is not correct it can use the 
+			// StreamObserver onError method to indicate the client that the precondition is failed
+			Status status = Status.FAILED_PRECONDITION.withDescription("Sorry authorization failed, not valid username.");
+	        responseObserver.onError(status.asRuntimeException());
+	        return;
 		}
 			responseObserver.onNext(response.build());
 			// return success response
@@ -95,7 +133,11 @@ public class accessControlServer extends accessControlImplBase{
 			response.setResponseCode(3).setMessage(name + " authorization successfully completed on level 3 security");
 		} else {
 			// return unsuccessful response
-			response.setResponseCode(99).setMessage(name + " sorry authorization failed");
+			// the server can validate the input and if it is not correct it can use the 
+			// StreamObserver onError method to indicate the client that the precondition is failed
+			Status status = Status.FAILED_PRECONDITION.withDescription("Sorry authorization failed, not valid username.");
+	        responseObserver.onError(status.asRuntimeException());
+	        return;
 		}
 			responseObserver.onNext(response.build());
 			// return success response
@@ -103,9 +145,16 @@ public class accessControlServer extends accessControlImplBase{
 			response.setResponseCode(4).setMessage(name + " authorization successfully completed on level 4 security");
 		} else {
 			// return unsuccessful response
-			response.setResponseCode(99).setMessage(name + " sorry authorization failed");
+			// the server can validate the input and if it is not correct it can use the 
+			// StreamObserver onError method to indicate the client that the precondition is failed
+			Status status = Status.FAILED_PRECONDITION.withDescription("Sorry authorization failed, not valid username.");
+	        responseObserver.onError(status.asRuntimeException());
+	        return;
 		}
+	});
+			// mark the next of requests
 			responseObserver.onNext(response.build());
+			// mark the end of requests
 			responseObserver.onCompleted();	
 			
 			System.out.println("\nThe user has sent the message.");
@@ -117,6 +166,10 @@ public class accessControlServer extends accessControlImplBase{
 	public void logout(LogoutRequest request, StreamObserver<LogoutResponse> responseObserver) {
 		// find out what was sent by the user
 		String username = request.getUsername();
+		// we do not want to accept requests with a missing user name, so we throw exception
+		if (username.isBlank()) {
+            throw new IllegalArgumentException("Missing username");
+        }
 
 		// now build response
 		LogoutResponse.Builder response = LogoutResponse.newBuilder();
@@ -127,7 +180,11 @@ public class accessControlServer extends accessControlImplBase{
 			response.setResponseCode(1).setResponseMessage(username + " successfully logged out");
 		} else {
 			// return unsuccessful response
-			response.setResponseCode(99).setResponseMessage(username + " sorry logout failed, user not found");
+			// the server can validate the input and if it is not correct it can use the 
+			// StreamObserver onError method to indicate the client that the precondition is failed
+			Status status = Status.FAILED_PRECONDITION.withDescription("Sorry login failed, not valid username.");
+	        responseObserver.onError(status.asRuntimeException());
+	        return;
 		}
 
 		responseObserver.onNext(response.build());
