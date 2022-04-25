@@ -2,6 +2,8 @@ package lightingControl;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.jmdns.ServiceInfo;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Status;

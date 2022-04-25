@@ -10,10 +10,13 @@ package accessControl;
 service accessControl {
 
 	// unary remote procedure calls
+	// user will send one request and server will respond with one response
 	rpc login(LoginRequest) returns (LoginResponse){}
 	// server streaming remote procedure calls
+	// user will send one request to the server and server will respond with stream of messages to the user
 	rpc authorization (AuthorizationRequest) returns (stream AuthorizationResponse) {}
 	// unary remote procedure calls
+	// user will send one request and server will respond with one response
 	rpc logout (LogoutRequest) returns (LogoutResponse) {}
 }
 // request message travel from client to server
@@ -43,6 +46,12 @@ message LogoutRequest{
 message LogoutResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
+}
+// error response message travel from server to client
+message ErrorResponse {
+        string username = 1;
+        string password = 2;
+        string expectedValue = 3;
 }
 
 message Empty{}

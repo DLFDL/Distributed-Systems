@@ -68,11 +68,10 @@ public class accessControlUser {
 	}
 
 	
-	//Update
+	// authorisation
 	 public static void authorization() { 
 		// create request messages
 		AuthorizationRequest authorizationRequest = AuthorizationRequest.newBuilder().setName("Daniel").build(); 
-		// client streaming code
 		// for incoming message implement a StreamObserver then pass the StreamObserver to the gRPC library
 		StreamObserver<AuthorizationResponse> responseObserver = new StreamObserver<AuthorizationResponse>() {
 

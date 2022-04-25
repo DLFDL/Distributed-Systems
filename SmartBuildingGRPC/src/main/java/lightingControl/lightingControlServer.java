@@ -63,7 +63,7 @@ public class lightingControlServer extends lightingControlImplBase {
 
 		// now build response
 		LoginResponse.Builder response = LoginResponse.newBuilder();
-		System.out.println("\nLogged in user is: " + username + ", and password is " + password);
+		System.out.println("\nLogged in user is: " + username + ", and password is " + password + "\n");
 
 		// return success response
 		if (username.equals("Daniel") && password.equals("Java")) {

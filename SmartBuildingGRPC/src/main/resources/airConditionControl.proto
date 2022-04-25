@@ -10,10 +10,13 @@ package airConditionControl;
 service airConditionControl {
 
 	// unary remote procedure calls
+	// user will send one request and server will respond with one response
 	rpc login(LoginRequest) returns (LoginResponse){}
 	// bidirectional streaming remote procedure calls
+	// user will send stream of messages to server and server will respond with stream of messages to the user
 	rpc update (stream UpdateRequest) returns (stream UpdateResponse) {}
 	// unary remote procedure calls
+	// user will send one request and server will respond with one response
 	rpc logout (LogoutRequest) returns (LogoutResponse) {}
 }
 // request message travel from client to server
@@ -28,7 +31,7 @@ message LoginResponse{
 }
 // request message travel from client to server
 message UpdateRequest{
-	string requestMessage = 1;
+	int32 requestCode = 1;
 }
 // response message travel from server to client
 message UpdateResponse{
@@ -43,6 +46,12 @@ message LogoutRequest{
 message LogoutResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
+}
+// error response message travel from server to client
+message ErrorResponse {
+        string username = 1;
+        string password = 2;
+        string expectedValue = 3;
 }
 
 message Empty{}

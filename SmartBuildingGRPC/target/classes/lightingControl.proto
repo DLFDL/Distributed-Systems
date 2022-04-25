@@ -6,39 +6,52 @@ option java_outer_classname = "lightingControlImpl";
 
 package lightingControl;
 
+// the lighting control service definition
 service lightingControl {
 
+	// unary remote procedure calls
+	// user will send one request and server will respond with one response
 	rpc login(LoginRequest) returns (LoginResponse){}
+	// client streaming remote procedure calls
+	// user will send stream of messages to the server and server will respond with one response to the user
 	rpc setIntensity (stream IntensityRequest) returns (IntensityResponse) {}
+	// unary remote procedure calls
+	// user will send one request and server will respond with one response
 	rpc logout (LogoutRequest) returns (LogoutResponse) {}
 }
-
+// request message travel from client to server
 message LoginRequest{
 	string username = 1;
 	string password = 2;
 }
-
+// response message travel from server to client
 message LoginResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
 }
-
+// request message travel from client to server
 message IntensityRequest{
 	int32 requestCode = 1;
 }
-
+// response message travel from server to client
 message IntensityResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
 }
-
+// request message travel from client to server
 message LogoutRequest{
 	string username = 1;
 }
-
+// response message travel from server to client
 message LogoutResponse{
 	string responseMessage = 1;
 	int32 responseCode = 2;
+}
+// error response message travel from server to client
+message ErrorResponse {
+        string username = 1;
+        string password = 2;
+        string expectedValue = 3;
 }
 
 message Empty{}
